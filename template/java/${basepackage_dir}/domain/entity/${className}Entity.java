@@ -1,37 +1,46 @@
 <#include "/macro.include"/>
-<#include "/java_copyright.include">
 <#assign className = table.className>   
 <#assign classNameLower = className?uncap_first> 
-package ${basepackage}.entity;
+package ${basepackage}.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
+
+import java.util.Date;
 import java.io.Serializable;
-import com.tq.management.base.entity.SuperEntity;
+import java.math.BigDecimal;
 
-/**
- * @version 1.0
- * @author tangqian
- */
-public class ${className} extends SuperEntity implements Serializable {
+@TableName("${table.sqlName}")
+public class ${className}Entity extends BaseEntity implements Serializable {
 
-<@generateJavaColumns/>
+	private static final long serialVersionUID = 1L;
+
 	<#list table.columns as column>
-	<@generateBycondition column.sqlName>
-	
+	<@excludeEntityCommonField column.sqlName>
+	/**
+	 * ${column.remarks}
+	 */
+	@TableField("${column.sqlName}")
 	private ${column.simpleJavaType} ${column.columnNameLower};
-	</@generateBycondition>
+
+	</@excludeEntityCommonField>
 	</#list>
+
+	<@generateJavaColumns/>
 }
+
+
 <#macro generateJavaColumns>
-	<#list table.columns as column>
-    <@generateBycondition column.sqlName>
+<#list table.columns as column>
+<@excludeEntityCommonField column.sqlName>
 	public void set${column.columnName}(${column.simpleJavaType} value) {
 		this.${column.columnNameLower} = value;
 	}
-	
+
 	public ${column.simpleJavaType} get${column.columnName}() {
 		return this.${column.columnNameLower};
 	}
-	
-	</@generateBycondition>
-	</#list>
+
+</@excludeEntityCommonField>
+</#list>
 </#macro>

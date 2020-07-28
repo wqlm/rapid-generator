@@ -1,31 +1,24 @@
-/*
- * 文 件 名:  ${table.className}Dao.java
- * 创 建 人:  tangqian
- * 创建时间:  <#if now??>${now?string('yyyy-MM-dd')}</#if>
- */
+
 <#assign className = table.className>   
 <#assign classNameLower = className?uncap_first>
 <#assign shortName = table.shortName>
 package ${basepackage}.dao;
 
-import java.util.List;
-import java.util.Map;
-
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
-import com.gv.app.epg.util.page.Pageable;
-import com.tq.home.common.dto.BaseSearchDto;
+import ${basepackage}.domain.vo.response.${className}VO;
+import ${basepackage}.domain.entity.${className}Entity;
+import java.util.List;
 
-@Repository
-public interface ${className}Dao {
-    
-    ${className} getById(Integer id);
-    
-    List<${className}> getPageList(@Param("page") Pageable<${className}> page, @Param("dto") BaseSearchDto dto);
-    
-    void insert(${className} ${shortName});
-    
-    void update(${className} ${shortName});
-    
-    void delete(Map<String, Object> map);
+
+@Mapper
+public interface ${className}Dao extends BaseMapper<${className}Entity> {
+
+    IPage<${className}VO> pageFind${className}(Page<${className}Entity> pageQuery, @Param("entity") ${className}Entity entity);
+
+    List<${className}VO>  find${className}ListByVo(@Param("entity") ${className}Entity entity);
 }
+

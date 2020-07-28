@@ -1,120 +1,121 @@
-<#include "/java_copyright.include">
 <#assign className = table.className>
 <#assign classNameLower = className?uncap_first>
 <#assign shortName = table.shortName>
+<#assign tableRemarks = table.remarks>
 package ${basepackage}.controller;
 
-import java.util.HashMap;
-import java.util.Map;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
-
-import org.apache.commons.lang.StringUtils;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-
-import com.tq.management.base.controller.BaseController;
-import ${basepackage}.entity.${className};
-import ${basepackage}.service.${className}Service;
-import com.tq.management.base.utils.WebDto;
-
-/**
- * @version 1.0
- * @author tangqian
- */
-@Controller
+@Tag(name = "${tableRemarks}")
+@RestController
+// TODO : 路径根据需要进行修改
 @RequestMapping("/${classNameLower}")
-public class ${className}Controller extends BaseController {
-    
-    private static final String LIST = "system/${classNameLower}/${classNameLower}_list";
-    
-    private static final String ADD = "system/${classNameLower}/${classNameLower}_add";
-    
-    private static final String EDIT = "system/${classNameLower}/${classNameLower}_edit";
-    
-    private static final String VIEW = "system/${classNameLower}/${classNameLower}_view";
-    
-    @Resource
-    private ${className}Service ${classNameLower}Service;
-    
-	@RequestMapping
-	public ModelAndView page() {
-		${shortName}
-		return new ModelAndView(LIST);
-	}
-	
-	@RequestMapping(value = "/list")
-	@ResponseBody
-	public Map<String, Object> list() {
-		WebDto dto = new WebDto(getRequest());
-		return ${classNameLower}Service.list(dto);
-	}
-    
-	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public ModelAndView add() {
-		return new ModelAndView(ADD);
-	}
+public class ${className}Controller {
 
-	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> doAdd() {
-		Map<String, Object> map = new HashMap<String, Object>();
-		WebDto dto = new WebDto(getRequest());
-		${classNameLower}Service.add(dto);
-		map.put("status", 1);
-		return map;
-	}
-	
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam(required = true) Integer id) {
-		ModelAndView mv = new ModelAndView(EDIT);
-		${className} ${classNameLower} = ${classNameLower}Service.get(id);
-		mv.addObject("entity", ${classNameLower});
-		return mv;
-	}
+    private static final Logger log = LoggerFactory.getLogger(${className}Controller.class);
 
-	@RequestMapping(value = "/edit", method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> doEdit() {
-		Map<String, Object> map = new HashMap<String, Object>();
-		WebDto dto = new WebDto(getRequest());
-		${classNameLower}Service.update(dto);
-		map.put("status", 1);
-		return map;
-	}
-	
-	@RequestMapping(value = "/view", method = RequestMethod.GET)
-	public ModelAndView view(@RequestParam(required = true) Integer id) {
-		ModelAndView mv = new ModelAndView(VIEW);
-		${className} ${classNameLower} = ${classNameLower}Service.get(id);
-		mv.addObject("entity", ${classNameLower});
-		return mv;
-	}
+    @Autowired
+    private ${className}Service service;
 
-	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> delete(@RequestParam(required = true) Integer id) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		${classNameLower}Service.delete(id);
-		map.put("status", 1);
-		return map;
-	}
+    /**
+     * 添加${tableRemarks}
+     *
+     * @param vo VO
+     * @return {@link ResponseEntity<Long>}
+     */
+    @Operation(description = "添加${tableRemarks}")
+    @PostMapping
+    public ResponseEntity<Long> add${className}(@Validated(GobalRule.Add.class) @RequestBody ${className}ReqVO vo) {
+        log.info("[添加${tableRemarks}]请求入参={}", vo);
+        return new ResponseEntity<>(service.save${className}(vo), HttpStatus.CREATED);
+    }
 
-	@RequestMapping(value = "/batchDelete", method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> batchDelete(@RequestParam(required = true) String ids) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		boolean result = ${classNameLower}Service.batchDelete(ids);
-		if (result) {
-			map.put("status", 1);
-		} else {
-			map.put("status", 0);
-			map.put("msg", "参数为空或者参数值非法");
-		}
-		return map;
-	}
+    /**
+     * 根据id修改${tableRemarks}
+     *
+     * @param vo VO
+     * @return {@link Boolean}
+     */
+    @Operation(description = "根据id修改${tableRemarks}")
+    @PutMapping
+    public Boolean update${className}ById(@Validated(GobalRule.Update.class) @RequestBody ${className}ReqVO vo) {
+        log.info("[根据id修改${tableRemarks}]请求入参={}", vo);
+        return service.update${className}ById(vo);
+    }
+
+    /**
+     * 根据ID单条查询${tableRemarks}
+     *
+     * @param id id
+     * @return {@link ${className}VO}
+     */
+    @Operation(description = "根据ID单条查询${tableRemarks}")
+    @GetMapping("/{id}")
+    public ${className}VO find${className}ById(@PathVariable("id") Long id) {
+        log.info("[根据ID查询${tableRemarks}]请求入参id={}", id);
+        return service.findOne${className}ById(id);
+    }
+
+    /**
+     * 根据条件分页查询${tableRemarks}
+     *
+     * @param pageRequestVO 分页请求VO
+     * @param vo            VO
+     * @return {@link PageResultVO<${className}VO>}
+     */
+    @Operation(description = "根据条件分页查询${tableRemarks}")
+    @GetMapping("/page-list")
+    public PageResultVO<${className}VO> findPage${className}(PageRequestVO pageRequestVO, @Validated(GobalRule.Query.class) ${className}ReqVO vo) {
+        log.info("[根据条件分页查询${tableRemarks}]请求入参={} ", vo);
+        return service.findPage${className}(pageRequestVO, vo);
+    }
+
+    /**
+     * 根据条件查询${tableRemarks}列表
+     *
+     * @param vo VO
+     * @return {@link List<${className}VO>}
+     */
+    @Operation(description = "根据条件查询${tableRemarks}列表")
+    @GetMapping("/list")
+    public List<${className}VO> find${className}ListByVo(${className}ReqVO vo) {
+        log.info("[根据条件查询${tableRemarks}列表]请求入参={}", vo);
+        return service.find${className}ListByVo(vo);
+    }
+
+    /**
+     * 删除${tableRemarks}
+     *
+     * @param id id
+     * @return {@link ResponseEntity<Boolean>}
+     */
+    @DeleteMapping("/{id}")
+    @Operation(description = "删除${tableRemarks}")
+    public ResponseEntity<Boolean> delete${className}ById(@PathVariable Long id) {
+        log.info("[删除${tableRemarks}]请求入参:{}", id);
+        return new ResponseEntity<>(service.delete${className}ById(id), HttpStatus.NO_CONTENT);
+    }
+
+
+    /**
+     * 批量删除${tableRemarks}
+     *
+     * @param batchVo id列表
+     * @return {@link ResponseEntity<Boolean>}
+     */
+    @Operation(description = "批量删除${tableRemarks}")
+    @PostMapping("/batch")
+    public ResponseEntity<Boolean> batch(@RequestBody BatchVO<Long> batchVo) {
+        log.info("[批量删除${tableRemarks}]请求入参:{}", batchVo);
+        return new ResponseEntity<>(service.deleteBatch${className}ById(batchVo.getDelete()), HttpStatus.NO_CONTENT);
+    }
+
 }

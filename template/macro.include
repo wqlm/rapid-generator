@@ -11,22 +11,55 @@
 	public ${constructor}(
 	<#list table.compositeIdColumns as column>
 		${column.javaType} ${column.columnNameLower}<#if column_has_next>,</#if>
-	</#list>		
+	</#list>
 	){
 	<#list table.compositeIdColumns as column>
 		<#if column.pk>
 		this.${column.columnNameLower} = ${column.columnNameLower};
 		</#if>
-	</#list>	
+	</#list>
 	}
 
 </#macro>
 
-<#assign excludeColunmStr = ",id,status,creator,modifier,create_time,modify_time,">
-
+<#-- entity 公共字段 -->
+<#assign excludeColunmStr = ",id,is_delete,version,create_user,create_time,update_user,update_time,">
+<#-- 将 entity 公共字段排除在外 -->
 <#macro generateBycondition columnSqlName>
 	<#assign compareName = "," + columnSqlName + ",">
 	<#if excludeColunmStr?index_of(compareName) == -1>
-		<#nested>	
+		<#nested>
+	</#if>
+</#macro>
+
+
+<#-- entity 公共字段 -->
+<#assign entityCommonField = ",id,is_delete,version,create_user,create_time,update_user,update_time,">
+<#-- 忽略 entity 公共字段 -->
+<#macro excludeEntityCommonField columnSqlName>
+	<#assign compareName = "," + columnSqlName + ",">
+	<#if entityCommonField?index_of(compareName) == -1>
+		<#nested>
+	</#if>
+</#macro>
+
+
+<#-- requestVo 的非必须字段 -->
+<#assign requestVoCommonField = ",app_key,is_delete,version,create_user,create_time,update_user,update_time,">
+<#-- 忽略 requestVo 的非必须字段 -->
+<#macro excludeRequestVoCommonField columnSqlName>
+	<#assign compareName = "," + columnSqlName + ",">
+	<#if requestVoCommonField?index_of(compareName) == -1>
+		<#nested>
+	</#if>
+</#macro>
+
+<#-- responseVo 的非必须字段 -->
+<#assign responseVoCommonField = ",is_delete,version,create_user,create_time,update_user,update_time,app_key,data_identification,">
+<#-- 忽略 responseVo 的非必须字段 -->
+<#macro excludeResponseVoCommonField columnSqlName>
+	<#assign compareName = "," + columnSqlName + ",">
+	<#if responseVoCommonField?index_of(compareName) == -1>
+		<#nested>
 	</#if>
 </#macro>
