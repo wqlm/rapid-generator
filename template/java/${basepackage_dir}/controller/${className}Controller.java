@@ -4,6 +4,12 @@
 <#assign tableRemarks = table.remarks>
 package ${basepackage}.controller;
 
+import ${basepackage}.domain.vo.PageResultVO;
+import ${basepackage}.domain.vo.request.BaseTemplateReqVO;
+import ${basepackage}.domain.vo.request.PageRequestVO;
+import ${basepackage}.domain.vo.response.BaseTemplateVO;
+import ${basepackage}.enums.GobalRule;
+import ${basepackage}.service.BaseTemplateService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
@@ -28,7 +34,7 @@ public class ${className}Controller {
     /**
      * 添加${tableRemarks}
      *
-     * @param vo VO
+     * @param vo vo
      * @return {@link ResponseEntity<Long>}
      */
     @Operation(description = "添加${tableRemarks}")
@@ -41,7 +47,7 @@ public class ${className}Controller {
     /**
      * 根据id修改${tableRemarks}
      *
-     * @param vo VO
+     * @param vo vo
      * @return {@link Boolean}
      */
     @Operation(description = "根据id修改${tableRemarks}")
@@ -81,7 +87,7 @@ public class ${className}Controller {
     /**
      * 根据条件查询${tableRemarks}列表
      *
-     * @param vo VO
+     * @param vo vo
      * @return {@link List<${className}VO>}
      */
     @Operation(description = "根据条件查询${tableRemarks}列表")
@@ -108,14 +114,14 @@ public class ${className}Controller {
     /**
      * 批量删除${tableRemarks}
      *
-     * @param batchVo id列表
+     * @param deleteList id列表
      * @return {@link ResponseEntity<Boolean>}
      */
     @Operation(description = "批量删除${tableRemarks}")
     @PostMapping("/batch")
-    public ResponseEntity<Boolean> batch(@RequestBody BatchVO<Long> batchVo) {
-        log.info("[批量删除${tableRemarks}]请求入参:{}", batchVo);
-        return new ResponseEntity<>(service.deleteBatch${className}ById(batchVo.getDelete()), HttpStatus.NO_CONTENT);
+    public ResponseEntity<Boolean> deleteBatch${className}ById(@RequestBody List<Long> deleteList) {
+        log.info("[批量删除${tableRemarks}]请求入参:{}", deleteList);
+        return new ResponseEntity<>(service.deleteBatch${className}ById(deleteList), HttpStatus.NO_CONTENT);
     }
 
 }

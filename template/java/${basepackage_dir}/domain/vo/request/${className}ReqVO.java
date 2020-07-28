@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import java.io.Serializable;
 
 
-@Schema(name = "${className}VO", description = "${tableRemarks}VO")
+@Schema(name = "${className}ReqVO", description = "${tableRemarks}VO")
 public class ${className}ReqVO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
