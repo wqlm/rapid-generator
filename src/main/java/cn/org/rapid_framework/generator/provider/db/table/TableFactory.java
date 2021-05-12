@@ -139,7 +139,11 @@ public class TableFactory {
             if ((null == remarks || "".equals(remarks)) && dbHelper.isMysqlDataBase()) {
                 remarks = getMysqlTableComments(getCatalog(), realTableName);
             }
-
+            //去掉表注释中的末尾的表字
+            assert remarks != null;
+            if ("表".equals(remarks.substring(remarks.length() - 1))) {
+                remarks = remarks.substring(0, remarks.length() - 1);
+            }
 
             Table table = new Table();
             table.setSqlName(realTableName);
