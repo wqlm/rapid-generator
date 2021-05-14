@@ -17,8 +17,8 @@
 	<entry key="namespace">pages</entry>
 	
 	<!-- 自动生成的代码存放路径-->
-<!--	<entry key="outRoot">.\generator-output</entry>-->
-	<entry key="outRoot">D:\Desktop\work\its2.0\project\data-repository\src\main</entry>
+	<entry key="outRoot">.\generator-output</entry>
+<!--	<entry key="outRoot">D:\Desktop\work\its2.0\project\data-repository\src\main</entry>-->
 
 
 	<!-- 需要移除的表名前缀,使用逗号进行分隔多个前缀,示例值: t_,v_ -->
