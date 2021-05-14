@@ -17,22 +17,23 @@
 	<entry key="namespace">pages</entry>
 	
 	<!-- 自动生成的代码存放路径-->
-	<entry key="outRoot">.\generator-output</entry>
+<!--	<entry key="outRoot">.\generator-output</entry>-->
+	<entry key="outRoot">D:\Desktop\work\its2.0\project\data-repository\src\main</entry>
+
 
 	<!-- 需要移除的表名前缀,使用逗号进行分隔多个前缀,示例值: t_,v_ -->
 	<entry key="tableRemovePrefixes">t_</entry>
 	
 	<entry key="jdbc.username">root</entry>
-<!--	<entry key="jdbc.password">root123</entry>-->
-	<entry key="jdbc.password">123456</entry>
+	<entry key="jdbc.password">Cusc_2021!@#</entry>
 	<!-- oracle需要指定jdbc.schema,其它数据库忽略此项配置  -->
 	<entry key="jdbc.schema"></entry>
-	<entry key="jdbc.catalog">its_common</entry>
+	<entry key="jdbc.catalog">cusc-itmp-dev</entry>
 	
 	<!-- 数据库类型映射  -->
-	<entry key="java_typemapping.java.sql.Timestamp">Date</entry>
-	<entry key="java_typemapping.java.sql.Date">Date</entry>
-	<entry key="java_typemapping.java.sql.Time">Date</entry>
+	<entry key="java_typemapping.java.sql.Timestamp">LocalDateTime</entry>
+	<entry key="java_typemapping.java.sql.Date">LocalDate</entry>
+	<entry key="java_typemapping.java.sql.Time">LocalTime</entry>
 	<entry key="java_typemapping.java.lang.Byte">Integer</entry>
 	<entry key="java_typemapping.java.lang.Short">Integer</entry>
 	<entry key="java_typemapping.java.math.BigDecimal">BigDecimal</entry>
@@ -43,8 +44,8 @@
 	-->
 
 	<!-- Mysql -->
-	<entry key="jdbc.url">jdbc:mysql://172.30.0.38:3306?useSSL=no</entry>
-	<entry key="jdbc.driver">com.mysql.jdbc.Driver</entry>
+	<entry key="jdbc.url">jdbc:mysql://192.168.23.94:31296?useSSL=false&amp;useUnicode=true&amp;characterEncoding=utf8&amp;character_set_server=utf8mb4&amp;serverTimezone=GMT%2b8</entry>
+	<entry key="jdbc.driver">com.mysql.cj.jdbc.Driver</entry>
 
 	<!-- Oracle 	jdbc:oracle:oci:@tnsname_devdb
 	<entry key="jdbc.url">jdbc:oracle:thin:@192.168.0.177:1521:[sid]</entry>

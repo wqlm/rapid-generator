@@ -22,44 +22,67 @@
 
 </#macro>
 
-<#-- entity 公共字段 -->
-<#assign excludeColunmStr = ",id,is_delete,version,create_user,create_time,update_user,update_time,">
-<#-- 将 entity 公共字段排除在外 -->
-<#macro generateBycondition columnSqlName>
-	<#assign compareName = "," + columnSqlName + ",">
-	<#if excludeColunmStr?index_of(compareName) == -1>
-		<#nested>
-	</#if>
-</#macro>
+
+<#-- 变量：entity 公共字段 -->
+<#assign entityCommonField = "id,is_delete,version,create_user,create_time,update_user,update_time,">
+
+<#-- 变量：dto 需要忽略的字段 -->
+<#assign dtoIgnoreField = "is_delete,version,create_user,create_time,update_user,update_time,">
+
+<#-- 变量：vo 需要忽略的字段 -->
+<#assign voIgnoreField = "is_delete,version,create_user,create_time,update_user,update_time,">
+
+<#-- 变量 : 是否还没有获取到第一个业务字段的序号的标志，默认为还没有获取到 -->
+<#assign oneFieldIndexFlag = true>
+
+<#-- 变量 : columns 中是否存在以下类型的字段，默认为不存在 -->
+<#assign bigDecimalFlag = false>
+<#assign localDateTimeFlag = false>
 
 
-<#-- entity 公共字段 -->
-<#assign entityCommonField = ",id,is_delete,version,create_user,create_time,update_user,update_time,">
-<#-- 忽略 entity 公共字段 -->
-<#macro excludeEntityCommonField columnSqlName>
-	<#assign compareName = "," + columnSqlName + ",">
+
+<#-- 方法：排除 entity 公共字段 -->
+<#macro excludeEntityCommonField column>
+	<#assign compareName = column.sqlName>
 	<#if entityCommonField?index_of(compareName) == -1>
 		<#nested>
 	</#if>
 </#macro>
 
-
-<#-- requestVo 的非必须字段 -->
-<#assign requestVoCommonField = ",app_key,is_delete,version,create_user,create_time,update_user,update_time,">
-<#-- 忽略 requestVo 的非必须字段 -->
-<#macro excludeRequestVoCommonField columnSqlName>
-	<#assign compareName = "," + columnSqlName + ",">
-	<#if requestVoCommonField?index_of(compareName) == -1>
+<#-- 方法：排除 dto 需要忽略的字段 -->
+<#macro excludeDtoIgnoreField column>
+	<#assign compareName = column.sqlName>
+	<#if dtoIgnoreField?index_of(compareName) == -1>
 		<#nested>
 	</#if>
 </#macro>
 
-<#-- responseVo 的非必须字段 -->
-<#assign responseVoCommonField = ",is_delete,version,create_user,create_time,update_user,update_time,app_key,data_identification,">
-<#-- 忽略 responseVo 的非必须字段 -->
-<#macro excludeResponseVoCommonField columnSqlName>
-	<#assign compareName = "," + columnSqlName + ",">
-	<#if responseVoCommonField?index_of(compareName) == -1>
+
+<#-- 方法：排除 vo 需要忽略的字段 -->
+<#macro excludeVoIgnoreField column>
+	<#assign compareName = column.sqlName>
+	<#if voIgnoreField?index_of(compareName) == -1>
 		<#nested>
 	</#if>
+</#macro>
+
+
+<#-- 方法：标记 column 中是否存在指定的类型 -->
+<#macro columnTypeFlag column>
+    <#if column.simpleJavaType == "BigDecimal">
+        <#assign bigDecimalFlag = true>
+    </#if>
+    <#if column.simpleJavaType == "LocalDateTime">
+        <#assign localDateTimeFlag = true>
+    </#if>
+</#macro>
+
+<#-- 方法：导入依赖 -->
+<#macro importDepend>
+<#if bigDecimalFlag>
+import java.math.BigDecimal;
+</#if>
+<#if localDateTimeFlag>
+import java.time.LocalDateTime;
+</#if>
 </#macro>
