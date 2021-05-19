@@ -16,9 +16,9 @@
 	<!-- jsp namespace: web/${namespace}/${className}/list.jsp -->
 	<entry key="namespace">pages</entry>
 	
-	<!-- 自动生成的代码存放路径-->
+	<!-- 自动生成的代码存放路径 -->
+	<!-- 警告！！！此路径不要随便指定，它会用生成的文件 覆盖 指定目录的所有文件、目录 -->
 	<entry key="outRoot">.\generator-output</entry>
-<!--	<entry key="outRoot">D:\Desktop\work\its2.0\project\data-repository\src\main</entry>-->
 
 
 	<!-- 需要移除的表名前缀,使用逗号进行分隔多个前缀,示例值: t_,v_ -->
