@@ -125,12 +125,12 @@ public class ${className}Service extends ServiceImpl<BaseMapper<${className}Enti
      * @param ${classNameLower}DTO dto
      * @return {@link PageResultVO<${className}VO>}
      */
-    public PageResultVO<${className}VO> findPage${className}(PageDTO pageDTO, ${className}DTO ${classNameLower}DTO) {
+    public PageResultVO<${className}VO> findPage${className}(PageDTO pageDTO, ${className}DTO dto) {
         Page<${className}Entity> pageQuery = new Page<>();
         pageQuery.setCurrent(pageDTO.getPageNum());
         pageQuery.setSize(pageDTO.getPageSize());
         // TODO : pageFind${className} 方法的具体 sql 需要自己去实现
-        IPage<${className}VO> result = dao.pageFind${className}(pageQuery, ${classNameLower}DTO);
+        IPage<${className}VO> result = dao.pageFind${className}(pageQuery, dto);
         PageResultVO<${className}VO> pageResult = new PageResultVO<>(result);
         LOG.info("[分页查询${tableRemarks}数据] 执行结果={}", pageResult);
         return pageResult;
