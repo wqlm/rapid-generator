@@ -29,7 +29,7 @@
 	<!-- oracle需要指定jdbc.schema,其它数据库忽略此项配置  -->
 	<entry key="jdbc.schema"></entry>
 <!--	<entry key="jdbc.catalog">cusc-itmp-dev</entry>-->
-	<entry key="jdbc.catalog">cusc-operate-dev</entry>
+	<entry key="jdbc.catalog">cusc-itmp-dev</entry>
 
 
 	<!-- 数据库类型映射  -->
