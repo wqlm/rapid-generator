@@ -4,7 +4,7 @@
 <#assign classNameLower = className?uncap_first>
 package ${basepackage}.domain.dto;
 
-import com.cusc.its.datarepository.utils.CheckGroup;
+import ${basepackage}.utils.CheckGroup;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.validation.constraints.NotNull;
