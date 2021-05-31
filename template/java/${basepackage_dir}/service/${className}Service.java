@@ -121,8 +121,8 @@ public class ${className}Service extends ServiceImpl<BaseMapper<${className}Enti
     /**
      * 分页查询${tableRemarks}
      *
-     * @param pageDTO   分页入参
-     * @param ${classNameLower}DTO dto
+     * @param pageDTO 分页入参
+     * @param dto     查询参数
      * @return {@link PageResultVO<${className}VO>}
      */
     public PageResultVO<${className}VO> findPage${className}(PageDTO pageDTO, ${className}DTO dto) {
