@@ -7,6 +7,7 @@ package ${basepackage}.mapperstruct;
 import ${basepackage}.domain.db.entity.${className}Entity;
 import ${basepackage}.domain.dto.${className}DTO;
 import ${basepackage}.domain.vo.${className}VO;
+import ${basepackage}.utils.DateTransform;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -27,7 +28,7 @@ import java.time.ZoneId;
 
 @Mapper(
 <#if localDateTimeFlag>
-        imports = {Instant.class,LocalDateTime.class,ZoneId.class}
+        imports = {DateTransform.class}
 </#if>
 )
 public interface ${className}Mapper{
@@ -44,7 +45,7 @@ public interface ${className}Mapper{
         <#list table.columns as column>
         <@excludeDtoIgnoreField column>
         <#if column.simpleJavaType == "LocalDateTime">
-        @Mapping(expression = "java(LocalDateTime.ofInstant(Instant.ofEpochMilli(dto.get${column.columnName}()), ZoneId.systemDefault()))", target = "${column.columnNameLower}"),
+        @Mapping(expression = "java(DateTransform.longToLocalDateTime(dto.get${column.columnName}()))", target = "${column.columnNameLower}"),
         </#if>
         </@excludeDtoIgnoreField>
         </#list>
@@ -63,7 +64,7 @@ public interface ${className}Mapper{
         <#list table.columns as column>
         <@excludeDtoIgnoreField column>
         <#if column.simpleJavaType == "LocalDateTime">
-        @Mapping(expression = "java(entity.get${column.columnName}().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli())", target = "${column.columnNameLower}"),
+        @Mapping(expression = "java(DateTransform.localDateTimeToLong(entity.get${column.columnName}()))", target = "${column.columnNameLower}"),
         </#if>
         </@excludeDtoIgnoreField>
         </#list>
