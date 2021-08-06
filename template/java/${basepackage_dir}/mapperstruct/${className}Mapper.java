@@ -50,7 +50,7 @@ public interface ${className}Mapper{
         </@excludeDtoIgnoreField>
         </#list>
     })
-    ${className}Entity ${className}Dto2${className}Entity(${className}DTO dto);
+    ${className}Entity ${classNameLower}Dto2${className}Entity(${className}DTO dto);
 
 
 
@@ -69,7 +69,7 @@ public interface ${className}Mapper{
         </@excludeDtoIgnoreField>
         </#list>
     })
-    ${className}VO ${className}Entity2${className}Vo(${className}Entity entity);
+    ${className}VO ${classNameLower}Entity2${className}Vo(${className}Entity entity);
 
 
 
@@ -80,5 +80,5 @@ public interface ${className}Mapper{
      * @param entityList ${classNameLower}EntityList
      * @return {@link List<${className}VO>}
      */
-    List<${className}VO> ${className}EntityList2${className}VoList(List<${className}Entity> entityList);
+    List<${className}VO> ${classNameLower}EntityList2${className}VoList(List<${className}Entity> entityList);
 }
