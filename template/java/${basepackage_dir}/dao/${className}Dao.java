@@ -21,7 +21,7 @@ public interface ${className}Dao extends BaseMapper<${className}Entity> {
      * @param dto       查询条件
      * @return {@link IPage<${className}VO>}
      */
-    IPage<${className}VO> pageFind${className}(IPage<${className}Entity> pageQuery, ${className}DTO dto);
+    IPage<${className}VO> pageFind${className}(IPage<${className}Entity> pageQuery, @Param("dto")  ${className}DTO dto);
 
 }
 

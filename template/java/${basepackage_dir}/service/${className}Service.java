@@ -48,15 +48,13 @@ public class ${className}Service extends ServiceImpl<BaseMapper<${className}Enti
      */
     public Long add${className}(${className}DTO dto) {
         // TODO 进行业务校验
-        ${className}Entity entity = ${className}Mapper.INSTANCE.${className}Dto2${className}Entity(dto);
-        entity.setCreateTime(LocalDateTime.now());
+        ${className}Entity entity = ${className}Mapper.INSTANCE.${classNameLower}Dto2${className}Entity(dto);
         entity.setCreateUser(OtherConstants.SYSUSER_NAME);
         boolean result = this.save(entity);
         if (!result) {
             throw new ApplicationException(BasicErrorEnum.MYSQL_OPERATION_ERROR.getCode(),
                     BasicErrorEnum.MYSQL_OPERATION_ERROR.getMessage());
         }
-        LOG.info("[添加${tableRemarks}] 执行结果={}", result);
         return entity.getId();
 
     }
@@ -73,17 +71,13 @@ public class ${className}Service extends ServiceImpl<BaseMapper<${className}Enti
                     BasicErrorEnum.NOT_FOUND_HANDLER.getMessage());
         }
 
-        UpdateWrapper<${className}Entity> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq(OtherConstants.ID, dto.getId());
-        ${className}Entity entity = ${className}Mapper.INSTANCE.${className}Dto2${className}Entity(dto);
-        entity.setUpdateTime(LocalDateTime.now());
+        ${className}Entity entity = ${className}Mapper.INSTANCE.${classNameLower}Dto2${className}Entity(dto);
         entity.setUpdateUser(OtherConstants.SYSUSER_NAME);
-        boolean result = this.update(entity, updateWrapper);
+        boolean result = this.lambdaUpdate().eq(BaseEntity::getId,entity.getId()).update(entity);
         if (!result) {
             throw new ApplicationException(BasicErrorEnum.MYSQL_OPERATION_ERROR.getCode(),
                     BasicErrorEnum.MYSQL_OPERATION_ERROR.getMessage());
         }
-        LOG.info("[修改${tableRemarks}] 执行结果={}", result);
     }
 
 
@@ -100,7 +94,7 @@ public class ${className}Service extends ServiceImpl<BaseMapper<${className}Enti
                     BasicErrorEnum.NOT_FOUND_HANDLER.getMessage());
         }
         ${className}Entity entity = get${className}ById(id);
-        ${className}VO vo = ${className}Mapper.INSTANCE.${className}Entity2${className}Vo(entity);
+        ${className}VO vo = ${className}Mapper.INSTANCE.${classNameLower}Entity2${className}Vo(entity);
         LOG.info("[根据id查询单条${tableRemarks}数据] 执行结果={}", vo);
         return vo;
     }
@@ -161,7 +155,6 @@ public class ${className}Service extends ServiceImpl<BaseMapper<${className}Enti
             throw new ApplicationException(BasicErrorEnum.MYSQL_OPERATION_ERROR.getCode(),
                     BasicErrorEnum.MYSQL_OPERATION_ERROR.getMessage());
         }
-        LOG.info("[删除${tableRemarks}数据] 执行结果={}", result);
     }
 
 
@@ -197,6 +190,5 @@ public class ${className}Service extends ServiceImpl<BaseMapper<${className}Enti
             throw new ApplicationException(BasicErrorEnum.MYSQL_OPERATION_ERROR.getCode(),
                     BasicErrorEnum.MYSQL_OPERATION_ERROR.getMessage());
         }
-        LOG.info("[批量删除${tableRemarks}数据] 执行结果={}", result);
     }
 }
