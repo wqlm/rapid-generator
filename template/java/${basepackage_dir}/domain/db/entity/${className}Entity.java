@@ -37,8 +37,8 @@ public class ${className}Entity extends BaseEntity {
 
 <#list table.columns as column>
 <@excludeEntityCommonField column>
-    public void set${column.columnName}(${column.simpleJavaType} value) {
-        this.${column.columnNameLower} = value;
+    public void set${column.columnName}(${column.simpleJavaType} ${column.columnNameLower}) {
+        this.${column.columnNameLower} = ${column.columnNameLower};
     }
 
     public ${column.simpleJavaType} get${column.columnName}() {

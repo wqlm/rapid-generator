@@ -36,27 +36,27 @@ public class ${className}Controller {
      * 添加${tableRemarks}
      *
      * @param dto 请求参数
-     * @return {@link ResponseEntity<Long>}
+     * @return id
      */
     @Operation(description = "添加${tableRemarks}")
     @PostMapping
-    public ResponseEntity<Long> add${className}(@Validated(CheckGroup.Add.class) @RequestBody ${className}DTO dto) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public Long add${className}(@Validated(CheckGroup.Add.class) @RequestBody ${className}DTO dto) {
         LOG.info("[添加${tableRemarks}],请求入参={}", dto);
-        return new ResponseEntity<>(service.add${className}(dto), HttpStatus.CREATED);
+        return service.add${className}(dto);
     }
 
     /**
      * 更新${tableRemarks}
      *
      * @param dto 请求参数
-     * @return {@link ResponseEntity}
      */
     @Operation(description = "更新${tableRemarks}")
     @PutMapping
-    public ResponseEntity update${className}(@Validated(CheckGroup.Update.class) @RequestBody ${className}DTO dto) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void update${className}(@Validated(CheckGroup.Update.class) @RequestBody ${className}DTO dto) {
         LOG.info("[更新${tableRemarks}],请求入参={}", dto);
         service.update${className}ById(dto);
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     /**
@@ -91,14 +91,13 @@ public class ${className}Controller {
      * 删除${tableRemarks}
      *
      * @param id id
-     * @return {@link ResponseEntity}
      */
     @DeleteMapping("/{id}")
     @Operation(description = "删除${tableRemarks}")
-    public ResponseEntity delete${className}(@PathVariable Long id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete${className}(@PathVariable Long id) {
         LOG.info("[删除${tableRemarks}],请求入参:{}", id);
         service.delete${className}ById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 
@@ -106,14 +105,13 @@ public class ${className}Controller {
      * 批量添加、修改、删除${tableRemarks}
      *
      * @param batchDTO 请求参数
-     * @return {@link ResponseEntity}
      */
     @PostMapping("/batch")
     @Operation(description = "批量处理${tableRemarks}")
-    public ResponseEntity batchHandle${className}(@RequestBody BatchDTO<${className}DTO> batchDTO) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void batchHandle${className}(@RequestBody BatchDTO<${className}DTO> batchDTO) {
         LOG.info("[批量处理${tableRemarks}],请求入参:{}", batchDTO);
         service.batchHandle${className}(batchDTO);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }

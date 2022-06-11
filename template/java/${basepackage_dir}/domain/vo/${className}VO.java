@@ -16,6 +16,8 @@ package ${basepackage}.domain.vo;
 <#if bigDecimalFlag>
 import java.math.BigDecimal;
 </#if>
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 /**
  * ${tableRemarks}VO
@@ -27,6 +29,9 @@ public class ${className}VO {
     /**
      * ${column.remarks}
      */
+   <#if column.simpleJavaType == "Long">
+    @JsonSerialize(using = ToStringSerializer.class)
+    </#if>
     private <#if column.simpleJavaType == "LocalDateTime">Long<#else>${column.simpleJavaType}</#if> ${column.columnNameLower};
 
 </@excludeVoIgnoreField>
@@ -34,8 +39,8 @@ public class ${className}VO {
 
 <#list table.columns as column>
 <@excludeVoIgnoreField column>
-    public void set${column.columnName}(<#if column.simpleJavaType == "LocalDateTime">Long<#else>${column.simpleJavaType}</#if> value) {
-        this.${column.columnNameLower} = value;
+    public void set${column.columnName}(<#if column.simpleJavaType == "LocalDateTime">Long<#else>${column.simpleJavaType}</#if> ${column.columnNameLower}) {
+        this.${column.columnNameLower} = ${column.columnNameLower};
     }
 
     public <#if column.simpleJavaType == "LocalDateTime">Long<#else>${column.simpleJavaType}</#if> get${column.columnName}() {

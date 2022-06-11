@@ -106,10 +106,7 @@ public class ${className}Service extends ServiceImpl<BaseMapper<${className}Enti
      * @return {@link ${className}Entity}
      */
     public ${className}Entity get${className}ById(Long id) {
-        QueryWrapper<${className}Entity> query = new QueryWrapper<>();
-        query.eq(OtherConstants.ID, id);
-        query.eq(OtherConstants.IS_DELETE, OtherConstants.FALSE);
-        return this.getOne(query);
+        return this.lambdaQuery().eq(BaseEntity::getId, id).eq(BaseEntity::getIsDelete, OtherConstants.FALSE).one();
     }
 
     /**
@@ -142,15 +139,13 @@ public class ${className}Service extends ServiceImpl<BaseMapper<${className}Enti
             throw new ApplicationException(BasicErrorEnum.NOT_FOUND_HANDLER.getCode(),
                     BasicErrorEnum.NOT_FOUND_HANDLER.getMessage());
         }
-        UpdateWrapper<${className}Entity> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq(OtherConstants.ID, id);
 
         ${className}Entity entity = new ${className}Entity();
         entity.setId(id);
         entity.setIsDelete(OtherConstants.TRUE);
         entity.setUpdateTime(LocalDateTime.now());
         entity.setUpdateUser(OtherConstants.SYSUSER_NAME);
-        boolean result = this.update(entity, updateWrapper);
+        boolean result = this.lambdaUpdate().eq(BaseEntity::getId, entity.getId()).update(entity)
         if (!result) {
             throw new ApplicationException(BasicErrorEnum.MYSQL_OPERATION_ERROR.getCode(),
                     BasicErrorEnum.MYSQL_OPERATION_ERROR.getMessage());

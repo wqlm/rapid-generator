@@ -39,8 +39,8 @@ public class ${className}DTO {
 
 <#list table.columns as column>
 <@excludeDtoIgnoreField column>
-    public void set${column.columnName}(<#if column.simpleJavaType == "LocalDateTime">Long<#else>${column.simpleJavaType}</#if> value) {
-        this.${column.columnNameLower} = value;
+    public void set${column.columnName}(<#if column.simpleJavaType == "LocalDateTime">Long<#else>${column.simpleJavaType}</#if> ${column.columnNameLower}) {
+        this.${column.columnNameLower} = ${column.columnNameLower};
     }
 
     public <#if column.simpleJavaType == "LocalDateTime">Long<#else>${column.simpleJavaType}</#if> get${column.columnName}() {
