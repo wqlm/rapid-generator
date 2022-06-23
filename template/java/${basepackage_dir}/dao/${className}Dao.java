@@ -7,6 +7,7 @@ package ${basepackage}.dao;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import ${basepackage}.domain.dto.${className}DTO;
 import ${basepackage}.domain.vo.${className}VO;
 import ${basepackage}.domain.db.entity.${className}Entity;

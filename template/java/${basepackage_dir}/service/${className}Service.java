@@ -145,7 +145,7 @@ public class ${className}Service extends ServiceImpl<BaseMapper<${className}Enti
         entity.setIsDelete(OtherConstants.TRUE);
         entity.setUpdateTime(LocalDateTime.now());
         entity.setUpdateUser(OtherConstants.SYSUSER_NAME);
-        boolean result = this.lambdaUpdate().eq(BaseEntity::getId, entity.getId()).update(entity)
+        boolean result = this.lambdaUpdate().eq(BaseEntity::getId, entity.getId()).update(entity);
         if (!result) {
             throw new ApplicationException(BasicErrorEnum.MYSQL_OPERATION_ERROR.getCode(),
                     BasicErrorEnum.MYSQL_OPERATION_ERROR.getMessage());
