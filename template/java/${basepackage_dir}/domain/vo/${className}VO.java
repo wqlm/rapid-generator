@@ -32,18 +32,18 @@ public class ${className}VO {
    <#if column.simpleJavaType == "Long">
     @JsonSerialize(using = ToStringSerializer.class)
     </#if>
-    private <#if column.simpleJavaType == "LocalDateTime">Long<#else>${column.simpleJavaType}</#if> ${column.columnNameLower};
+    private ${column.simpleJavaType}</#if> ${column.columnNameLower};
 
 </@excludeVoIgnoreField>
 </#list>
 
 <#list table.columns as column>
 <@excludeVoIgnoreField column>
-    public void set${column.columnName}(<#if column.simpleJavaType == "LocalDateTime">Long<#else>${column.simpleJavaType}</#if> ${column.columnNameLower}) {
+    public void set${column.columnName}(${column.simpleJavaType}</#if> ${column.columnNameLower}) {
         this.${column.columnNameLower} = ${column.columnNameLower};
     }
 
-    public <#if column.simpleJavaType == "LocalDateTime">Long<#else>${column.simpleJavaType}</#if> get${column.columnName}() {
+    public ${column.simpleJavaType}</#if> get${column.columnName}() {
         return this.${column.columnNameLower};
     }
 

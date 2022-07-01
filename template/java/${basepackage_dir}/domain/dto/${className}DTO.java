@@ -32,18 +32,18 @@ public class ${className}DTO {
     @NotNull(message = "id不能为空", groups = {CheckGroup.Update.class})
     </#if>
     @Schema(description = "${column.remarks}")
-    private <#if column.simpleJavaType == "LocalDateTime">Long<#else>${column.simpleJavaType}</#if> ${column.columnNameLower};
+    private ${column.simpleJavaType}</#if> ${column.columnNameLower};
 
 </@excludeDtoIgnoreField>
 </#list>
 
 <#list table.columns as column>
 <@excludeDtoIgnoreField column>
-    public void set${column.columnName}(<#if column.simpleJavaType == "LocalDateTime">Long<#else>${column.simpleJavaType}</#if> ${column.columnNameLower}) {
+    public void set${column.columnName}(${column.simpleJavaType}</#if> ${column.columnNameLower}) {
         this.${column.columnNameLower} = ${column.columnNameLower};
     }
 
-    public <#if column.simpleJavaType == "LocalDateTime">Long<#else>${column.simpleJavaType}</#if> get${column.columnName}() {
+    public ${column.simpleJavaType}</#if> get${column.columnName}() {
         return this.${column.columnNameLower};
     }
 

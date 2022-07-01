@@ -19,18 +19,12 @@ import java.util.List;
 <@columnTypeFlag column/>
 </@excludeEntityCommonField>
 </#list>
-<#if localDateTimeFlag>
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 </#if>
 
 
-@Mapper(
-<#if localDateTimeFlag>
-        imports = {DateTransform.class}
-</#if>
-)
 public interface ${className}Mapper{
     
     ${className}Mapper INSTANCE = Mappers.getMapper(${className}Mapper.class);
@@ -41,15 +35,6 @@ public interface ${className}Mapper{
      * @param dto ${classNameLower}DTO
      * @return {@link ${className}Entity}
      */
-    @Mappings({
-        <#list table.columns as column>
-        <@excludeDtoIgnoreField column>
-        <#if column.simpleJavaType == "LocalDateTime">
-        @Mapping(expression = "java(DateTransform.longToLocalDateTime(dto.get${column.columnName}()))", target = "${column.columnNameLower}"),
-        </#if>
-        </@excludeDtoIgnoreField>
-        </#list>
-    })
     ${className}Entity ${classNameLower}Dto2${className}Entity(${className}DTO dto);
 
 
@@ -60,15 +45,6 @@ public interface ${className}Mapper{
      * @param entity ${classNameLower}Entity
      * @return {@link ${className}VO}
      */
-    @Mappings({
-        <#list table.columns as column>
-        <@excludeDtoIgnoreField column>
-        <#if column.simpleJavaType == "LocalDateTime">
-        @Mapping(expression = "java(DateTransform.localDateTimeToLong(entity.get${column.columnName}()))", target = "${column.columnNameLower}"),
-        </#if>
-        </@excludeDtoIgnoreField>
-        </#list>
-    })
     ${className}VO ${classNameLower}Entity2${className}Vo(${className}Entity entity);
 
 

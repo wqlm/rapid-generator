@@ -27,7 +27,7 @@ import ${basepackage}.domain.vo.${className}VO;
 import ${basepackage}.constants.enums.error.BasicErrorEnum;
 import ${basepackage}.exception.ApplicationException;
 import ${basepackage}.mapperstruct.${className}Mapper;
-
+import ${basepackage}.utils.TenantIdUtil;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +49,7 @@ public class ${className}Service extends ServiceImpl<BaseMapper<${className}Enti
     public Long add${className}(${className}DTO dto) {
         // TODO 进行业务校验
         ${className}Entity entity = ${className}Mapper.INSTANCE.${classNameLower}Dto2${className}Entity(dto);
+        entity.setTenantId(TenantIdUtil.getTenantId());
         entity.setCreateUser(OtherConstants.SYSUSER_NAME);
         boolean result = this.save(entity);
         if (!result) {
@@ -121,7 +122,7 @@ public class ${className}Service extends ServiceImpl<BaseMapper<${className}Enti
         pageQuery.setCurrent(pageDTO.getPageNum());
         pageQuery.setSize(pageDTO.getPageSize());
         // TODO : pageFind${className} 方法的具体 sql 需要自己去实现
-        IPage<${className}VO> result = dao.pageFind${className}(pageQuery, dto);
+        IPage<${className}VO> result = dao.pageFind${className}(pageQuery, dto, TenantIdUtil.getTenantId());
         PageResultVO<${className}VO> pageResult = new PageResultVO<>(result);
         LOG.info("[分页查询${tableRemarks}数据] 执行结果={}", pageResult);
         return pageResult;

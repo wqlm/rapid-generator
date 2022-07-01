@@ -24,13 +24,13 @@
 
 
 <#-- 变量：entity 公共字段 -->
-<#assign entityCommonField = "id,is_delete,version,create_user,create_time,update_user,update_time,">
+<#assign entityCommonField = ",id,is_delete,version,create_user,create_time,update_user,update_time,">
 
 <#-- 变量：dto 需要忽略的字段 -->
-<#assign dtoIgnoreField = "is_delete,version,create_user,create_time,update_user,update_time,">
+<#assign dtoIgnoreField = ",is_delete,version,create_user,create_time,update_user,update_time,tenant_id,">
 
 <#-- 变量：vo 需要忽略的字段 -->
-<#assign voIgnoreField = "is_delete,version,create_user,create_time,update_user,update_time,">
+<#assign voIgnoreField = ",is_delete,version,create_user,create_time,update_user,update_time,tenant_id,">
 
 <#-- 变量 : 是否还没有获取到第一个业务字段的序号的标志，默认为还没有获取到 -->
 <#assign oneFieldIndexFlag = true>
@@ -43,7 +43,7 @@
 
 <#-- 方法：排除 entity 公共字段 -->
 <#macro excludeEntityCommonField column>
-	<#assign compareName = column.sqlName>
+	<#assign compareName = "," + column.sqlName + ",">
 	<#if entityCommonField?index_of(compareName) == -1>
 		<#nested>
 	</#if>
@@ -51,7 +51,7 @@
 
 <#-- 方法：排除 dto 需要忽略的字段 -->
 <#macro excludeDtoIgnoreField column>
-	<#assign compareName = column.sqlName>
+	<#assign compareName = "," + column.sqlName + ",">
 	<#if dtoIgnoreField?index_of(compareName) == -1>
 		<#nested>
 	</#if>
@@ -60,7 +60,7 @@
 
 <#-- 方法：排除 vo 需要忽略的字段 -->
 <#macro excludeVoIgnoreField column>
-	<#assign compareName = column.sqlName>
+	<#assign compareName = "," + column.sqlName + ",">
 	<#if voIgnoreField?index_of(compareName) == -1>
 		<#nested>
 	</#if>
