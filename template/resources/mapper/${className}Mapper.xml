@@ -19,7 +19,7 @@
     </resultMap>
 
     <select id="pageFind${className}"
-            parameterType="${basepackage}.domain.dto.${className}DTO"
+            parameterType="${basepackage}.domain.qo.${className}QO"
             resultType="${basepackage}.domain.vo.${className}VO">
     
     </select>

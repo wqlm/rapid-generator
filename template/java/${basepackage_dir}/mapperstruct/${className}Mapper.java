@@ -8,7 +8,8 @@ import ${basepackage}.domain.db.entity.${className}Entity;
 import ${basepackage}.domain.dto.${className}DTO;
 import ${basepackage}.domain.vo.${className}VO;
 import ${basepackage}.utils.DateTransform;
-
+import ${basepackage}.domain.dto.${className}UpdateDTO;
+import ${basepackage}.domain.qo.${className}QO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -22,9 +23,8 @@ import java.util.List;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-</#if>
 
-
+@Mapper
 public interface ${className}Mapper{
     
     ${className}Mapper INSTANCE = Mappers.getMapper(${className}Mapper.class);
@@ -32,29 +32,35 @@ public interface ${className}Mapper{
     /**
      * 将 {@link ${className}DTO} 转换为 {@link ${className}Entity}
      *
-     * @param dto ${classNameLower}DTO
+     * @param dto
      * @return {@link ${className}Entity}
      */
-    ${className}Entity ${classNameLower}Dto2${className}Entity(${className}DTO dto);
+    ${className}Entity dto2Entity(${className}DTO dto);
 
+
+    /**
+     * 将 {@link ${className}UpdateDTO} 转换为 {@link ${className}Entity}
+     *
+     * @param updateDTO
+     * @return {@link ${className}Entity}
+     */
+    ${className}Entity updateDto2Entity(${className}UpdateDTO updateDTO);
 
 
     /**
      * 将 {@link ${className}Entity} 转换为 {@link ${className}VO}
      *
-     * @param entity ${classNameLower}Entity
+     * @param entity Entity
      * @return {@link ${className}VO}
      */
-    ${className}VO ${classNameLower}Entity2${className}Vo(${className}Entity entity);
-
-
+    ${className}VO entity2Vo(${className}Entity entity);
 
 
     /**
      * 将 {@link List<${className}Entity>} 转换为 {@link List<${className}VO>}
      *
-     * @param entityList ${classNameLower}EntityList
+     * @param entityList EntityList
      * @return {@link List<${className}VO>}
      */
-    List<${className}VO> ${classNameLower}EntityList2${className}VoList(List<${className}Entity> entityList);
+    List<${className}VO> entityList2VoList(List<${className}Entity> entityList);
 }

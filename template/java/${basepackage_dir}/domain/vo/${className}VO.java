@@ -18,6 +18,7 @@ import java.math.BigDecimal;
 </#if>
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import java.time.LocalDateTime;
 
 /**
  * ${tableRemarks}VO
@@ -32,18 +33,18 @@ public class ${className}VO {
    <#if column.simpleJavaType == "Long">
     @JsonSerialize(using = ToStringSerializer.class)
     </#if>
-    private ${column.simpleJavaType}</#if> ${column.columnNameLower};
+    private ${column.simpleJavaType} ${column.columnNameLower};
 
 </@excludeVoIgnoreField>
 </#list>
 
 <#list table.columns as column>
 <@excludeVoIgnoreField column>
-    public void set${column.columnName}(${column.simpleJavaType}</#if> ${column.columnNameLower}) {
+    public void set${column.columnName}(${column.simpleJavaType} ${column.columnNameLower}) {
         this.${column.columnNameLower} = ${column.columnNameLower};
     }
 
-    public ${column.simpleJavaType}</#if> get${column.columnName}() {
+    public ${column.simpleJavaType} get${column.columnName}() {
         return this.${column.columnNameLower};
     }
 

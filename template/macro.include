@@ -27,7 +27,14 @@
 <#assign entityCommonField = ",id,is_delete,version,create_user,create_time,update_user,update_time,">
 
 <#-- 变量：dto 需要忽略的字段 -->
-<#assign dtoIgnoreField = ",is_delete,version,create_user,create_time,update_user,update_time,tenant_id,">
+<#assign dtoIgnoreField = ",id,is_delete,version,create_user,create_time,update_user,update_time,tenant_id,">
+
+<#-- 变量：updateDto 需要忽略的字段 -->
+<#assign updateDtoIgnoreField = ",is_delete,version,create_user,create_time,update_user,update_time,tenant_id,">
+
+<#-- 变量：qo 需要忽略的字段 -->
+<#assign qoIgnoreField = ",id,is_delete,version,create_user,create_time,update_user,update_time,tenant_id,">
+
 
 <#-- 变量：vo 需要忽略的字段 -->
 <#assign voIgnoreField = ",is_delete,version,create_user,create_time,update_user,update_time,tenant_id,">
@@ -53,6 +60,22 @@
 <#macro excludeDtoIgnoreField column>
 	<#assign compareName = "," + column.sqlName + ",">
 	<#if dtoIgnoreField?index_of(compareName) == -1>
+		<#nested>
+	</#if>
+</#macro>
+
+<#-- 方法：排除 updateDto 需要忽略的字段 -->
+<#macro excludeUpdateDtoIgnoreField column>
+	<#assign compareName = "," + column.sqlName + ",">
+	<#if updateDtoIgnoreField?index_of(compareName) == -1>
+		<#nested>
+	</#if>
+</#macro>
+
+<#-- 方法：排除 qo 需要忽略的字段 -->
+<#macro excludeQoIgnoreField column>
+	<#assign compareName = "," + column.sqlName + ",">
+	<#if qoIgnoreField?index_of(compareName) == -1>
 		<#nested>
 	</#if>
 </#macro>

@@ -10,35 +10,38 @@ import java.time.LocalDateTime;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 <#list table.columns as column>
-<@excludeDtoIgnoreField column>
+<@excludeUpdateDtoIgnoreField column>
 <@columnTypeFlag column/>
 <#if oneFieldIndexFlag>
 <#assign oneFieldIndex = column?counter>
 <#assign oneFieldIndexFlag = false>
 </#if>
-</@excludeDtoIgnoreField>
+</@excludeUpdateDtoIgnoreField>
 </#list>
 <#if bigDecimalFlag>
 import java.math.BigDecimal;
 </#if>
 
 /**
- * ${tableRemarks}DTO
+ * ${tableRemarks}UpdateDTO
  */
-public class ${className}DTO {
+public class ${className}UpdateDTO {
 
 <#list table.columns as column>
-<@excludeDtoIgnoreField column>
+<@excludeUpdateDtoIgnoreField column>
     /**
      * ${column.remarks}
      */
+    <#if column.pk>
+    @NotNull(message = "id不能为空")
+    </#if>
     private ${column.simpleJavaType} ${column.columnNameLower};
 
-</@excludeDtoIgnoreField>
+</@excludeUpdateDtoIgnoreField>
 </#list>
 
 <#list table.columns as column>
-<@excludeDtoIgnoreField column>
+<@excludeUpdateDtoIgnoreField column>
     public void set${column.columnName}(${column.simpleJavaType} ${column.columnNameLower}) {
         this.${column.columnNameLower} = ${column.columnNameLower};
     }
@@ -47,14 +50,14 @@ public class ${className}DTO {
         return this.${column.columnNameLower};
     }
 
-</@excludeDtoIgnoreField>
+</@excludeUpdateDtoIgnoreField>
 </#list>
 
     @Override
     public String toString() {
-        return "${className}DTO{" +
+        return "${className}UpdateDTO{" +
             <#list table.columns as column>
-            <@excludeDtoIgnoreField column>
+            <@excludeUpdateDtoIgnoreField column>
             <#if column?counter == oneFieldIndex>
                 <#if column.sqlTypeName == "VARCHAR">
                 "${column.columnNameLower}='" + ${column.columnNameLower} + '\'' +
@@ -68,7 +71,7 @@ public class ${className}DTO {
                 ", ${column.columnNameLower}=" + ${column.columnNameLower} +
                 </#if>
             </#if>
-            </@excludeDtoIgnoreField>
+            </@excludeUpdateDtoIgnoreField>
             </#list>
                 '}';
     }

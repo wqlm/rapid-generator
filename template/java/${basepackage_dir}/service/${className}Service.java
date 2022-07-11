@@ -4,8 +4,6 @@
 <#assign tableRemarks = table.remarks>
 package ${basepackage}.service;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -21,8 +19,9 @@ import ${basepackage}.dao.${className}Dao;
 import ${basepackage}.domain.db.entity.${className}Entity;
 import ${basepackage}.domain.vo.PageResultVO;
 import ${basepackage}.domain.dto.${className}DTO;
+import ${basepackage}.domain.dto.${className}UpdateDTO;
 import ${basepackage}.domain.dto.PageDTO;
-import ${basepackage}.domain.dto.BatchDTO;
+import ${basepackage}.domain.qo.${className}QO;
 import ${basepackage}.domain.vo.${className}VO;
 import ${basepackage}.constants.enums.error.BasicErrorEnum;
 import ${basepackage}.exception.ApplicationException;
@@ -48,7 +47,7 @@ public class ${className}Service extends ServiceImpl<BaseMapper<${className}Enti
      */
     public Long add${className}(${className}DTO dto) {
         // TODO 进行业务校验
-        ${className}Entity entity = ${className}Mapper.INSTANCE.${classNameLower}Dto2${className}Entity(dto);
+        ${className}Entity entity = ${className}Mapper.INSTANCE.dto2Entity(dto);
         entity.setTenantId(TenantIdUtil.getTenantId());
         entity.setCreateUser(OtherConstants.SYSUSER_NAME);
         boolean result = this.save(entity);
@@ -63,16 +62,16 @@ public class ${className}Service extends ServiceImpl<BaseMapper<${className}Enti
     /**
      * 根据id修改${tableRemarks}
      *
-     * @param dto dto
+     * @param updateDTO
      */
-    public void update${className}ById(${className}DTO dto) {
-        ${className}Entity entityDb = get${className}ById(dto.getId());
+    public void update${className}ById(${className}UpdateDTO updateDTO) {
+        ${className}Entity entityDb = get${className}ById(updateDTO.getId());
         if (null == entityDb) {
             throw new ApplicationException(BasicErrorEnum.NOT_FOUND_HANDLER.getCode(),
                     BasicErrorEnum.NOT_FOUND_HANDLER.getMessage());
         }
 
-        ${className}Entity entity = ${className}Mapper.INSTANCE.${classNameLower}Dto2${className}Entity(dto);
+        ${className}Entity entity = ${className}Mapper.INSTANCE.updateDto2Entity(updateDTO);
         entity.setUpdateUser(OtherConstants.SYSUSER_NAME);
         boolean result = this.lambdaUpdate().eq(BaseEntity::getId,entity.getId()).update(entity);
         if (!result) {
@@ -95,7 +94,7 @@ public class ${className}Service extends ServiceImpl<BaseMapper<${className}Enti
                     BasicErrorEnum.NOT_FOUND_HANDLER.getMessage());
         }
         ${className}Entity entity = get${className}ById(id);
-        ${className}VO vo = ${className}Mapper.INSTANCE.${classNameLower}Entity2${className}Vo(entity);
+        ${className}VO vo = ${className}Mapper.INSTANCE.entity2Vo(entity);
         LOG.info("[根据id查询单条${tableRemarks}数据] 执行结果={}", vo);
         return vo;
     }
@@ -113,16 +112,15 @@ public class ${className}Service extends ServiceImpl<BaseMapper<${className}Enti
     /**
      * 分页查询${tableRemarks}
      *
-     * @param pageDTO 分页入参
-     * @param dto     查询参数
+     * @param qo     查询参数
      * @return {@link PageResultVO<${className}VO>}
      */
-    public PageResultVO<${className}VO> findPage${className}(PageDTO pageDTO, ${className}DTO dto) {
+    public PageResultVO<${className}VO> findPage${className}(${className}QO qo) {
         Page<${className}Entity> pageQuery = new Page<>();
-        pageQuery.setCurrent(pageDTO.getPageNum());
-        pageQuery.setSize(pageDTO.getPageSize());
+        pageQuery.setCurrent(qo.getPageNum());
+        pageQuery.setSize(qo.getPageSize());
         // TODO : pageFind${className} 方法的具体 sql 需要自己去实现
-        IPage<${className}VO> result = dao.pageFind${className}(pageQuery, dto, TenantIdUtil.getTenantId());
+        IPage<${className}VO> result = dao.pageFind${className}(pageQuery, qo, TenantIdUtil.getTenantId());
         PageResultVO<${className}VO> pageResult = new PageResultVO<>(result);
         LOG.info("[分页查询${tableRemarks}数据] 执行结果={}", pageResult);
         return pageResult;
@@ -154,37 +152,4 @@ public class ${className}Service extends ServiceImpl<BaseMapper<${className}Enti
     }
 
 
-    /**
-     * 批量处理${tableRemarks}
-     *
-     * @param batchDTO 批量处理
-     */
-    public void batchHandle${className}(BatchDTO<${className}DTO> batchDTO) {
-        List<Long> deleteList = batchDTO.getDelete();
-        if (deleteList != null) {
-            batchDelete${className}(deleteList);
-        }
-    }
-
-    /**
-     * 批量删除${tableRemarks}
-     *
-     * @param deleteList id列表
-     */
-    public void batchDelete${className}(List<Long> deleteList) {
-        List<${className}Entity> list = new ArrayList<>();
-        for (Long id : deleteList) {
-            ${className}Entity entity = new ${className}Entity();
-            entity.setId(id);
-            entity.setIsDelete(OtherConstants.TRUE);
-            entity.setUpdateTime(LocalDateTime.now());
-            entity.setUpdateUser(OtherConstants.SYSUSER_NAME);
-            list.add(entity);
-        }
-        boolean result = this.updateBatchById(list);
-        if (!result) {
-            throw new ApplicationException(BasicErrorEnum.MYSQL_OPERATION_ERROR.getCode(),
-                    BasicErrorEnum.MYSQL_OPERATION_ERROR.getMessage());
-        }
-    }
 }

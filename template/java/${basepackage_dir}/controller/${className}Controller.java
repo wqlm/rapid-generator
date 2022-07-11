@@ -20,6 +20,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ${basepackage}.domain.dto.${className}UpdateDTO;
+import ${basepackage}.domain.qo.${className}QO;
 
 @Tag(name = "${tableRemarks}")
 @RestController
@@ -38,10 +40,9 @@ public class ${className}Controller {
      * @param dto 请求参数
      * @return id
      */
-    @Operation(description = "添加${tableRemarks}")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Long add${className}(@Validated(CheckGroup.Add.class) @RequestBody ${className}DTO dto) {
+    public Long add${className}(@Validated @RequestBody ${className}DTO dto) {
         LOG.info("[添加${tableRemarks}],请求入参={}", dto);
         return service.add${className}(dto);
     }
@@ -49,14 +50,13 @@ public class ${className}Controller {
     /**
      * 更新${tableRemarks}
      *
-     * @param dto 请求参数
+     * @param updateDTO 请求参数
      */
-    @Operation(description = "更新${tableRemarks}")
     @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update${className}(@Validated(CheckGroup.Update.class) @RequestBody ${className}DTO dto) {
-        LOG.info("[更新${tableRemarks}],请求入参={}", dto);
-        service.update${className}ById(dto);
+    public void update${className}(@Validated @RequestBody ${className}UpdateDTO updateDTO) {
+        LOG.info("[更新${tableRemarks}],请求入参={}", updateDTO);
+        service.update${className}ById(updateDTO);
     }
 
     /**
@@ -65,9 +65,8 @@ public class ${className}Controller {
      * @param id id
      * @return {@link ${className}VO}
      */
-    @Operation(description = "根据ID查询${tableRemarks}")
-    @GetMapping("/{id}")
-    public ${className}VO find${className}ById(@PathVariable("id") Long id) {
+    @PostMapping("/id")
+    public ${className}VO find${className}ById(Long id) {
         LOG.info("[根据ID查询${tableRemarks}],请求入参id={}", id);
         return service.find${className}ById(id);
     }
@@ -75,15 +74,14 @@ public class ${className}Controller {
     /**
      * 根据条件分页查询${tableRemarks}
      *
-     * @param pageDTO 分页dto
-     * @param dto     请求参数
+     * @param qo     请求参数
      * @return {@link PageResultVO<${className}VO>}
      */
-    @Operation(description = "根据条件分页查询${tableRemarks}")
-    @GetMapping
-    public PageResultVO<${className}VO> findPage${className}(@Validated(CheckGroup.Query.class) PageDTO pageDTO, @Validated(CheckGroup.Query.class) ${className}DTO dto) {
-        LOG.info("[根据条件分页查询${tableRemarks}],请求入参={} ", dto);
-        return service.findPage${className}(pageDTO, dto);
+    @PostMapping("/page")
+    public PageResultVO<${className}VO> findPage${className}(
+            @RequestBody @Validated(CheckGroup.Query.class) ${className}QO qo) {
+        LOG.info("[根据条件分页查询${tableRemarks}],请求入参={} ", qo);
+        return service.findPage${className}(qo);
     }
 
 
@@ -92,26 +90,11 @@ public class ${className}Controller {
      *
      * @param id id
      */
-    @DeleteMapping("/{id}")
-    @Operation(description = "删除${tableRemarks}")
+    @PostMapping("/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete${className}(@PathVariable Long id) {
+    public void delete${className}(Long id) {
         LOG.info("[删除${tableRemarks}],请求入参:{}", id);
         service.delete${className}ById(id);
-    }
-
-
-    /**
-     * 批量添加、修改、删除${tableRemarks}
-     *
-     * @param batchDTO 请求参数
-     */
-    @PostMapping("/batch")
-    @Operation(description = "批量处理${tableRemarks}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void batchHandle${className}(@RequestBody BatchDTO<${className}DTO> batchDTO) {
-        LOG.info("[批量处理${tableRemarks}],请求入参:{}", batchDTO);
-        service.batchHandle${className}(batchDTO);
     }
 
 }
