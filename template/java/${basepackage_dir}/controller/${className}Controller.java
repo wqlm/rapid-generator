@@ -22,6 +22,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ${basepackage}.domain.dto.${className}UpdateDTO;
 import ${basepackage}.domain.qo.${className}QO;
+import java.util.List;
 
 @Tag(name = "${tableRemarks}")
 @RestController
@@ -95,6 +96,17 @@ public class ${className}Controller {
     public void delete${className}(Long id) {
         LOG.info("[删除${tableRemarks}],请求入参:{}", id);
         service.delete${className}ById(id);
+    }
+
+
+    /**
+     * 查询全部${tableRemarks}
+     *
+     * @return {@link List<${className}VO>}
+     */
+    @PostMapping("/all")
+    public List<${className}VO> getAll() {
+        return service.getAll();
     }
 
 }

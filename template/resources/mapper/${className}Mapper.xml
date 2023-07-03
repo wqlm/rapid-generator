@@ -7,16 +7,6 @@
 <#macro mapperEl value>${r"#{"}${value}}</#macro>
 <mapper namespace="${basepackage}.dao.${className}Dao">
 
-    <resultMap id="voMap" type="${basepackage}.domain.vo.${className}VO" >
-        <#list table.columns as column>
-        <@excludeDtoIgnoreField column>
-        <#if column.sqlTypeName == "DATETIME">
-        <result column="${column.sqlName}" jdbcType="TIMESTAMP" property="${column.columnNameLower}" javaType="Long"
-                typeHandler="${basepackage}.dao.mybatis.TimestampTypeHandler"/>
-        </#if>
-        </@excludeDtoIgnoreField>
-        </#list>
-    </resultMap>
 
     <select id="pageFind${className}"
             parameterType="${basepackage}.domain.qo.${className}QO"

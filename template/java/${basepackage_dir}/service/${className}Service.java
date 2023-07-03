@@ -151,5 +151,15 @@ public class ${className}Service extends ServiceImpl<BaseMapper<${className}Enti
         }
     }
 
-
+    /**
+     * 查询全部${tableRemarks}
+     *
+     * @return {@link List<${className}VO>}
+     */
+    public List<${className}VO> getAll() {
+        List<${className}Entity> entityList = this.lambdaQuery()
+        .eq(${className}Entity::getTenantId, TenantIdUtil.getTenantId())
+        .eq(BaseEntity::getIsDelete, OtherConstants.FALSE).list();
+        return ${className}Mapper.INSTANCE.entityList2VoList(entityList);
+    }
 }
